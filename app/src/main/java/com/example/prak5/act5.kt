@@ -16,24 +16,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.material3.RadioButton
 
 @Composable
-fun FormDataDiri(modifier: Modifier){
+fun FormDataDiri(modifier: Modifier) {
     //variabel-variabel untuk mengingat nilai masukan dari keyboard
-    var textNama by remember {mutableStateOf(value="")}
-    var textAlamat by remember { mutableStateOf(value ="")}
-    var textJK by remember {mutableStateOf(value ="")}
+    var textNama by remember { mutableStateOf(value = "") }
+    var textAlamat by remember { mutableStateOf(value = "") }
+    var textJK by remember { mutableStateOf(value = "") }
 
     //variabel-variabel untuk menyimpan data yang diperoleh dari komponen UI
-    var nama by remember {mutableStateOf(value ="")}
-    var alamat by remember {mutableStateOf(value ="")}
-    var jenis by remember {mutableStateOf(value ="")}
-    var gender:List<String> = listOf("Laki-laki", "Perempuan")
-    Column(modifier= Modifier.padding(top = 50.dp),
-        verticalArrangement =  Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    var nama by remember { mutableStateOf(value = "") }
+    var alamat by remember { mutableStateOf(value = "") }
+    var jenis by remember { mutableStateOf(value = "") }
+    var gender: List<String> = listOf("Laki-laki", "Perempuan")
+    Column(
+        modifier = Modifier.padding(top = 50.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         OutlinedTextField(
-            value =  textNama,
+            value = textNama,
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.width(250.dp),
@@ -43,7 +47,29 @@ fun FormDataDiri(modifier: Modifier){
             }
         )
         Row() {
-
+            gender.forEach { item ->
+                Row(
+                    modifier = Modifier.selectable(
+                    selected = textJK == item,
+                    onClick = { textJK = item }
+                ), verticalAlignment = Alignment.CenterVertically) {
+                    RadioButton(
+                        selected = textJK == item,
+                        onClick = {
+                            textJK = item
+                        })
+                    Text(item)
+                }
+            }
         }
+        OutlinedTextField(
+            value = textAlamat,
+            singleLine = true,
+            modifier = Modifier.width(250.dp),
+            label = { Text(text = "Alamat") },
+            onValueChange = {
+                textAlamat = it
+            }
+        )
     }
 }
